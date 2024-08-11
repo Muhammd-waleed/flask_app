@@ -1,6 +1,7 @@
 from flask import render_template,request,redirect,url_for,flash
-from market import app,connection
-from market.forms import RegisterForm
+from market import app,connection,bcrypt
+from market.forms import RegisterForm,LoginForm
+
 
 
 @app.route("/")
@@ -32,7 +33,8 @@ def register_page():
             query=''' 
                     insert into users(name,email,password)
                     values(%s, %s, %s);'''
-            data=(form.username.data, form.email.data, form.password.data)
+            hash_password=bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            data=(form.username.data, form.email.data, hash_password)
             cursor=connection.cursor()  
             cursor.execute(query, data)
             connection.commit()
@@ -47,3 +49,8 @@ def register_page():
             
     return render_template('form.html',form=form)
 
+
+@app.route('/login',methods=['POST','GET'])
+def login_page():
+    form=LoginForm()
+    return render_template('login.html',form=form)

@@ -1,6 +1,6 @@
 flask
-flask-wtf
+flask_wtf
 wtforms
 pymysql
 email_validator
- 
+ flask_bcrypt
