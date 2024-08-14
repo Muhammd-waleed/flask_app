@@ -3,4 +3,5 @@ flask_wtf
 wtforms
 pymysql
 email_validator
- flask_bcrypt
+flask_bcrypt
+flask_login
